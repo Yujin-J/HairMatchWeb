@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change Your Hairstyle</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-logo">
+            <h1>AI Hairstyle</h1>
+        </div>
+        <nav class="header-nav">
+            <ul>
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="change-hairstyle.html" class="nav-link">Change Hairstyle</a></li>
+                <li><a href="hair-catalogue.html" class="nav-link">Hair Catalogue</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Section -->
+    <main class="main-container">
+        <div class="change-hairstyle-layout">
+            <!-- Image Upload Section -->
+            <div class="upload-container">
+                <div class="upload-section">
+                    <img id="uploadedImage" src="images/default-user.jpg" alt="Upload Preview" class="preview-image">
+                </div>
+                <label for="fileInput" class="upload-button">Upload Image</label>
+                <input type="file" id="fileInput" accept="image/*" hidden>
+            </div>
+
+            <!-- Options Section -->
+            <div class="options-section">
+                <select id="hairstyleSelect" class="dropdown">
+                    <option value="Long wavy">Long wavy Hair</option>
+                    <option value="Short cut">Short cut Hair</option>
+                    <option value="Ringlets">Ringlets Hair</option>
+                    <option value="Plaits">Ringlets Hair</option>
+                    <option value="straight">Straight Hair</option>
+                    <option value="Bob">Bob Hair</option>
+                    <option value="curly">Curly Hair</option>
+                </select>
+                <select id="shadeSelect" class="dropdown">
+                    <option value="light">Light</option>
+                    <option value="medium">Medium</option>
+                    <option value="dark">Dark</option>
+                </select>
+                <select id="colorSelect" class="dropdown">
+                    <option value="red">red</option>
+                    <option value="grey">grey</option>
+                    <option value="blonde">Blonde</option>
+                    <option value="brown">Brown</option>
+                    <option value="black">Black</option>
+                </select>
+                <button id="generateButton" class="primary-button">Create Hairstyle</button>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-section">
+            <div class="result-container">
+                <h3>Original Image</h3>
+                <img id="originalImage" src="{{ original_image if original_image else '' }}" alt="Original Image">
+            </div>
+            <div class="result-container">
+                <h3>Generated Hairstyle</h3>
+                <img id="resultImage" src="{{ generated_image if generated_image else '' }}" alt="Generated Hairstyle">
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2024 AI Hairstyle</p>
+    </footer>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const uploadedImage = document.getElementById('uploadedImage');
+        const originalImage = document.getElementById('originalImage');
+        const resultImage = document.getElementById('resultImage');
+        const generateButton = document.getElementById('generateButton');
+
+        fileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    uploadedImage.src = e.target.result;
+                    originalImage.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        generateButton.addEventListener('click', async () => {
+            const file = fileInput.files[0];
+            if (!file) {
+                alert("Please upload an image.");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("image", file);
+            formData.append("hairstyle", document.getElementById('hairstyleSelect').value);
+            formData.append("shade", document.getElementById('shadeSelect').value);
+            formData.append("color", document.getElementById('colorSelect').value);
+
+            try {
+                const response = await fetch('/change-hairstyle.html', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    originalImage.src = `${result.original_image}?${new Date().getTime()}`;
+                    resultImage.src = `${result.generated_image}?${new Date().getTime()}`;
+                } else {
+                    alert(result.error || "Failed to generate hairstyle.");
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                alert("An error occurred while generating the hairstyle.");
+            }
+        });
+    </script>
+</body>
+</html>

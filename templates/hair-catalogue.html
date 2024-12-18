@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hair Catalogue</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-logo">
+            <h1>AI Hairstyle</h1>
+        </div>
+        <nav class="header-nav">
+            <ul>
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="change-hairstyle.html" class="nav-link">Change Hairstyle</a></li>
+                <li><a href="hair-catalogue.html" class="nav-link">Hair Catalogue</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hair Catalogue Section -->
+    <main class="catalogue-container">
+        <div class="catalogue-grid">
+            <div class="catalogue-item">
+                <img src="{{ url_for('static', filename='images/build-perm-hair.jpg') }}" alt="Build Perm Hair">
+                <p>Build-Perm Hair</p>
+            </div>
+            <div class="catalogue-item">
+                <img src="{{ url_for('static', filename='images/grace-perm-hair.jpg') }}" alt="Grace Perm Hair">
+                <p>Grace-Perm Hair</p>
+            </div>
+            <div class="catalogue-item">
+                <img src="{{ url_for('static', filename='images/Lob-hair.jpg') }}" alt="Lob Hair">
+                <p>Lob Hair</p>
+            </div>
+            <div class="catalogue-item">
+                <img src="{{ url_for('static', filename='images/long-perm-hair.jpg') }}" alt="Long Perm Hair">
+                <p>Long-Perm Hair</p>
+            </div>
+            <div class="catalogue-item">
+                <img src="{{ url_for('static', filename='images/wavy-perm-hair.jpg') }}" alt="Wavy Perm Hair">
+                <p>Wavy Perm Hair</p>
+            </div>
+            <div class="catalogue-item">
+                <img src="{{ url_for('static', filename='images/asperm-hair.jpg') }}" alt="Asperm Hair">
+                <p>As-Perm Hair</p>
+            </div>
+            <div class="catalogue-item">
+                <img src="{{ url_for('static', filename='images/wavy-bob-hair.jpg') }}" alt="Wavy Bob Hair">
+                <p>Wavy Bob Hair</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2024 AI Hairstyle</p>
+    </footer>
+</body>
+</html>

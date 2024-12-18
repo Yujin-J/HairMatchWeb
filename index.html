@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Hairstyle - Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-logo">
+            <h1>AI Hairstyle</h1>
+        </div>
+        <nav class="header-nav">
+            <ul>
+                <li><a href="{{ url_for('index') }}" class="nav-link">Home</a></li>
+                <li><a href="{{ url_for('change_hairstyle') }}" class="nav-link">Change Hairstyle</a></li>
+                <li><a href="{{ url_for('hair_catalogue') }}" class="nav-link">Hair Catalogue</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Home Section -->
+    <section id="home" class="home-section">
+        <div class="slideshow-container">
+            <div class="slide">
+                <img src="{{ url_for('static', filename='images/babershop-2.jpg') }}" alt="Salon Interior">
+                <p class="slide-text">Welcome to AI Hairstyle</p>
+            </div>
+            <div class="slide">
+                <img src="{{ url_for('static', filename='images/style-6.jpg') }}" alt="Beautiful Hairstyle">
+                <p class="slide-text">Discover Trending Styles</p>
+            </div>
+            <div class="slide">
+                <img src="{{ url_for('static', filename='images/style-4.png') }}" alt="Elegant Hairstyle">
+                <p class="slide-text">Redefine Your Look</p>
+            </div>
+        </div>
+        <div class="slideshow-controls">
+            <span class="prev" onclick="changeSlide(-1)">&#10094;</span>
+            <span class="next" onclick="changeSlide(1)">&#10095;</span>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2024 AI Hairstyle</p>
+    </footer>
+
+    <script>
+        let slideIndex = 0;
+        const slides = document.querySelectorAll(".slide");
+
+        function showSlides(index) {
+            slides.forEach((slide, i) => {
+                slide.style.display = i === index ? "block" : "none";
+            });
+        }
+
+        function changeSlide(direction) {
+            slideIndex = (slideIndex + direction + slides.length) % slides.length;
+            showSlides(slideIndex);
+        }
+
+        // Initialize slideshow
+        showSlides(slideIndex);
+    </script>
+</body>
+</html>
